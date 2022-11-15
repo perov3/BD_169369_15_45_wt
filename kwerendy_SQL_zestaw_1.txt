@@ -5,3 +5,36 @@ rodzaj ENUM("wiking","ptak","kobieta"), data_ur DATE, wiek INT UNSIGNED);
 INSERT INTO postac (nazwa,rodzaj,data_ur,wiek) VALUES ('Drozd','wiking','1483-07-11',95);
 INSERT INTO postac (nazwa,rodzaj,data_ur,wiek) VALUES ('Tesciowa','kobieta','1450-06-03',111);
 3.UPDATE postac SET wiek=88 where id_postacji=3;
+
+ZAD2.
+1.CREATE TABLE walizka (id_walizki int PRIMARY KEY AUTO_INCREMENT, pojemnosc int UNSIGNED, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT, FOREIGN KEY(id_wlasciciela) REFERENCES smilekp.postac(id_postacji)ON DELETE CASCADE);
+2.ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+3.INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES (20,'czerwony',1), (10,'rozowy',3);
+
+ZAD3.
+1.CREATE TABLE izba (adres_budynku VARCHAR(40) ,nazwa_izby VARCHAR(40), metraz int UNSIGNED, wlasciciel INT, FOREIGN KEY(wlasciciel) REFERENCES smilekp.postac(id_postacji) on delete set null, PRIMARY KEY(adres_budynku,nazwa_izby));
+2.ALTER TABLE izba ADD kolor_izby ENUM('zielony','zolty','czarny') default 'czarny' after metraz;
+3.INSERT INTO izba(adres_budynku,nazwa_izby,metraz,kolor_izby,wlasciciel) VALUES ('dworcowa',65,40,'zolty',2);
+
+ZAD4.
+1.CREATE TABLE przetwory (id_przetworu INT PRIMARY KEY, rok_produkcji int default '1654', id_wykonawcy INT, FOREIGN KEY(id_wykonawcy) REFERENCES smilekp.postac(id_postacji), zawartosc varchar(40), dodatek varchar(40) default 'papryczka_chilli', id_konsumenta INT, FOREIGN KEY(id_konsumenta) REFERENCES smilekp.postac(id_postacji));
+2.INSERT INTO przetwory (id_przetworu,id_wykonawcy,zawartosc,id_konsumenta) VALUES (1,1,'bigos',1);
+
+ZAD5.
+1.insert into postac (nazwa,rodzaj,data_ur,wiek) values ("Herald","wiking","1000-01-02","19");
+insert into postac (nazwa,rodzaj,data_ur,wiek) values ("Bara","wiking","1001-11-07","20");
+insert into postac (nazwa,rodzaj,data_ur,wiek) values ("Shama","wiking","1003-05-07","21");
+insert into postac (nazwa,rodzaj,data_ur,wiek) values ("Wurak","wiking","1004-09-10","22");
+insert into postac (nazwa,rodzaj,data_ur,wiek) values ("Wijnar","wiking","1006-12-12","24");
+2.create table statek (nazwa_statku varchar(40) primary key, rodzaj_statku enum('maly','sredni','duzy'), data_wodowania date, max_ladownosc int unsigned);
+3.insert into statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) values ("czarna perla", "duzy", "1000-07-10", "20");
+insert into statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) values ("white widow", "sredni", "1020-08-09", "10");
+4.alter table postac add funkcja varchar(40);
+5.update postac set funkcja = "kapitan" where id_postacji = 1;
+6.alter table postac add statek varchar(40);
+alter table postac add foreign key (statek) references statek(nazwa_statku);
+7.update postac set statek = "czarna perla" where id_postacji =1;
+update postac set statek = "white widow" where id_postacji =7;
+8.delete from izba where nazwa_izby="65";
+9.drop table izba;
+
