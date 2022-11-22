@@ -1,0 +1,26 @@
+3.
+a)  update postac set statek='czarna perla' where nazwa regexp 'a' and rodzaj !='kobieta';
+ update postac set statek='czarna perla' where nazwa like 'a';
+b)update statek set max_ladownosc = max_ladownosc * 0.7 where data_wodowania >= '1901-01-01' and data_wodowania <='2000-12-31';
+c)alter table postac add check(wiek <=1000);
+
+4.
+a)alter table postac modify rodzaj enum('wiking','ptak','kobieta','syrena');
+insert into postac(pesel,id_postacji,nazwa,rodzaj,data_ur,wiek) values ('12345678917','8','loko','waz','1810-10-09','90');
+b) create table marynarz select * from postac where statek is not null;
+c)alter table marynarz add primary key(pesel);
+alter table marynarz add foreign key (statek) references statek(nazwa_statku);
+
+5.
+a)update postac set statek = null where statek = 'czarna perla';
+update marynarz set statek = null where statek = 'czarna perla';
+b)delete from postac where id_postacji=5;
+c)alter table postac drop foreign key postac_ibfk_1;
+alter table marynarz drop foreign key marynarz_ibfk_1;
+delete from statek;
+alter table postac drop column statek;
+alter table marynarz drop column statek;
+d) drop table statek;
+e)create table zwierz (id int primary key auto_increment, nazwa varchar(40), wiek int);
+f)insert into zwierz(nazwa,wiek) select nazwa,wiek from postac where rodzaj='ptak';
+insert into zwierz(nazwa,wiek) select nazwa,wiek from postac where rodzaj='waz';
