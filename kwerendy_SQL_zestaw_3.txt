@@ -1,0 +1,23 @@
+//1.
+1)create table smilekp.kreatura as select * from wikingowie.kreatura;
+create table smilekp.zasob as select * from wikingowie.zasob;
+create table smilekp.ekwipunek as select * from wikingowie.ekwipunek;
+2)select * from zasob;
+3)select * from zasob where rodzaj='jedzenie';
+4)select idZasobu, ilosc from ekwipunek where idKreatury in (1,3,5);
+//2.
+1)select * from kreatura where rodzaj != 'wiedzma' and udzwig >=50;
+2) select * from zasob where waga between 2 and 5;
+3)select * from kreatura where nazwa like '%or%' and udzwig between 30 and 70;
+//3.
+1)select * from zasob where month(dataPozyskania) between 7 and 8;
+2)select * from zasob where rodzaj is not null order by waga asc;
+3)select * from kreatura order by dataUr desc limit 5;
+//4.
+1)select distinct rodzaj from zasob where rodzaj is not null;
+2)select concat(nazwa, '-',rodzaj) from kreatura where rodzaj like 'wi%';
+3)select ilosc*waga from zasob where year(dataPozyskania) between 2000 and 2007;
+//5.
+select nazwa, waga*0.7 AS 'netto', waga*0.3 AS 'odpadki' from zasob;
+select*from zasob where rodzaj is null;
+select distinct nazwa, rodzaj from zasob where nazwa like 'Ba%' or nazwa like '%os' order by nazwa;
