@@ -1,0 +1,19 @@
+-1-
+1.select avg(waga) from kreatura where rodzaj="wiking";
+2.select rodzaj, count(rodzaj) as liczba_kreatur, avg(waga) as srednia_waga from kreatura group by rodzaj;
+3.select round(avg(1700 - year(dataUr)),2) as sredni_wiek from kreatura;
+-2-
+1.select rodzaj, sum(waga) as sum_wag from zasob group by rodzaj;;
+2.select nazwa, avg(waga) as srednia_waga, sum(ilosc), sum(waga) from zasob group by nazwa having sum(ilosc) >= 4 and sum(waga) > 10;
+3.select rodzaj, count(distinct(nazwa)) from zasob group by rodzaj having count(ilosc) >1;
+-3-
+1.select kreatura.nazwa, ekwipunek.idZasobu as ewkipunek, zasob.idZasobu from kreatura left join ekwipunek on ekwipunek.idKreatury = kreatura.idKreatury join zasob on zasob.idZasobu = ekwipunek.idZasobu;
+2.select kreatura.nazwa, zasob.nazwa from kreatura join ekwipunek on ekwipunek.idKreatury = kreatura.idKreatury join zasob on zasob.idZasobu = ekwipunek.idZasobu;
+3.select kreatura.idKreatury, kreatura.nazwa, ekwipunek.idZasobu from kreatura left join ekwipunek on kreatura.idKreatury = ekwipunek.idKreatury having idZasobu is null;
+-4-
+1. select kreatura.nazwa, year(kreatura.dataUr) as rokUr, zasob.idZasobu, zasob.nazwa from kreatura cross join ekwipunek on kreatura.idKreatury = ekwipunek.idKreatury join zasob on zasob.idZasobu = ekwipunek.idZasobu having rokUr > 1670 and rokUr < 1680;
+2.select kreatura.nazwa, zasob.idZasobu, zasob.rodzaj from kreatura join ekwipunek on ekwipunek.idKreatury = kreatura.idKreatury left join zasob on zasob.idZasobu = ekwipunek.idZasobu having rodzaj='jedzenie' order by kreatura.dataUr asc limit 5;
+3.SELECT CONCAT(e.nazwa, ' - ', m.nazwa) AS 'nazwa-nazwa', e.idKreatury, m.idKreatury FROM kreatura e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
+-5-
+1.select kreatura.rodzaj, round(avg(zasob.waga),2) from kreatura join ekwipunek on ekwipunek.idKreatury = kreatura.idKreatury join zasob on zasob.idZasobu= ekwipunek.idZasobu where (kreatura.rodzaj != 'waz' and kreatura.rodzaj !='malpa') group by kreatura.rodzaj having sum(ekwipunek.ilosc) < 30;
+2.SELECT e.nazwa, e.rodzaj, e.dataUr FROM kreatura e, (SELECT MIN(dataUr) AS min, MAX(dataUr) AS max FROM kreatura GROUP BY rodzaj) e2 WHERE dataUr=min OR dataUr=max;
